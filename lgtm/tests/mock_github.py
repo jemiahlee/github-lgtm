@@ -149,6 +149,7 @@ class MockPullRequest(object):
         self._file_paths = file_paths
         self._comments = comments
         self.base = PullRequestPart(None, None, {"ref": "master"}, False)
+        self.head = PullRequestPart(None, None, {"pushed_at": last_commit_date})
 
     @classmethod
     def from_state(cls, id):
@@ -176,6 +177,14 @@ class MockCommit(object):
 
     def __init__(self, last_modified):
         self.last_modified = last_modified
+        self.commit = MockGithubCommit(last_modified)
+
+
+class MockGithubCommit(object):
+
+    def __init__(self, last_modified):
+        self.last_modified = dateutil_parser.parse(last_modified)
+        self.raw_headers = ''
 
 
 class MockFile(object):

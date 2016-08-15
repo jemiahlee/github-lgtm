@@ -130,10 +130,7 @@ class PullRequest(object):
         Gets the date of the most recent commit on a pull request.
         :return: a datetime object
         """
-        commits = self._pr.get_commits()
-        commit_date_strings = [c.last_modified for c in commits]
-        commit_dates = [dateutil_parser.parse(d).replace(tzinfo=None) for d in commit_date_strings]
-        return max(commit_dates) if commit_dates else None
+        return self._pr.head.raw_data['pushed_at']
 
     @property
     def author(self):
